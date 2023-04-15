@@ -23,7 +23,6 @@ package com.andrei1058.bedwars.shop.defaultrestore;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.api.arena.team.ITeam;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -43,39 +42,6 @@ import static com.andrei1058.bedwars.support.version.common.VersionCommon.api;
 
 // Used to restore default swords and bows if they are removed from the inventory and you remain with a less powerful weapon of the same kind. 1.12-.
 public class ShopItemRestoreListener {
-
-    // 1.11 or older
-    public static class PlayerDrop implements Listener {
-        @EventHandler
-        public void onDrop(PlayerDropItemEvent e) {
-            if (manageDrop(e.getPlayer(), e.getItemDrop())) e.setCancelled(true);
-        }
-    }
-
-    // 1.11 or older
-    public static class PlayerPickup implements Listener {
-        @SuppressWarnings("deprecation")
-        @EventHandler
-        public void onDrop(PlayerPickupItemEvent e) {
-            if (managePickup(e.getItem(), e.getPlayer())) e.setCancelled(true);
-        }
-    }
-
-    // 1.12 or newer
-    public static class EntityDrop implements Listener {
-        @EventHandler
-        public void onDrop(EntityDropItemEvent e) {
-            if (manageDrop(e.getEntity(), e.getItemDrop())) e.setCancelled(true);
-        }
-    }
-
-    // 1.12 or newer
-    public static class EntityPickup implements Listener {
-        @EventHandler
-        public void onDrop(EntityPickupItemEvent e) {
-            if (managePickup(e.getItem(), e.getEntity())) e.setCancelled(true);
-        }
-    }
 
     /**
      * Remove the default swords if the picked item is more powerful.
@@ -147,6 +113,38 @@ public class ShopItemRestoreListener {
         return false;
     }
 
+    // 1.11 or older
+    public static class PlayerDrop implements Listener {
+        @EventHandler
+        public void onDrop(PlayerDropItemEvent e) {
+            if (manageDrop(e.getPlayer(), e.getItemDrop())) e.setCancelled(true);
+        }
+    }
+
+    // 1.11 or older
+    public static class PlayerPickup implements Listener {
+        @SuppressWarnings("deprecation")
+        @EventHandler
+        public void onDrop(PlayerPickupItemEvent e) {
+            if (managePickup(e.getItem(), e.getPlayer())) e.setCancelled(true);
+        }
+    }
+
+    // 1.12 or newer
+    public static class EntityDrop implements Listener {
+        @EventHandler
+        public void onDrop(EntityDropItemEvent e) {
+            if (manageDrop(e.getEntity(), e.getItemDrop())) e.setCancelled(true);
+        }
+    }
+
+    // 1.12 or newer
+    public static class EntityPickup implements Listener {
+        @EventHandler
+        public void onDrop(EntityPickupItemEvent e) {
+            if (managePickup(e.getItem(), e.getEntity())) e.setCancelled(true);
+        }
+    }
 
     public static class DefaultRestoreInvClose implements Listener {
 

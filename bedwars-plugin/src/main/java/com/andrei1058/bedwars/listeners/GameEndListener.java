@@ -28,7 +28,7 @@ public class GameEndListener implements Listener {
         // clear dropped items
         World game = event.getArena().getWorld();
         for (Entity item : game.getEntities()) {
-            if (item instanceof Item || item instanceof ItemStack){
+            if (item instanceof Item || item instanceof ItemStack) {
                 item.remove();
             }
         }

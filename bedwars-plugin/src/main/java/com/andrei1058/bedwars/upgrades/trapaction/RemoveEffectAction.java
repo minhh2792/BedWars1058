@@ -30,7 +30,7 @@ public class RemoveEffectAction implements TrapAction {
 
     private PotionEffectType potionEffectType;
 
-    public RemoveEffectAction(PotionEffectType potionEffectType){
+    public RemoveEffectAction(PotionEffectType potionEffectType) {
         this.potionEffectType = potionEffectType;
     }
 

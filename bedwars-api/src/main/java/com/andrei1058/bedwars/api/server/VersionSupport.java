@@ -49,18 +49,20 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class VersionSupport {
 
-    private static String name2;
     public static String PLUGIN_TAG_GENERIC_KEY = "BedWars1058";
     public static String PLUGIN_TAG_TIER_KEY = "tierIdentifier";
-
-    private Effect eggBridge;
-
+    private static String name2;
     private static ConcurrentHashMap<UUID, Despawnable> despawnables = new ConcurrentHashMap<>();
+    private Effect eggBridge;
     private Plugin plugin;
 
     public VersionSupport(Plugin plugin, String versionName) {
         name2 = versionName;
         this.plugin = plugin;
+    }
+
+    public static String getName() {
+        return name2;
     }
 
     protected void loadDefaultEffects() {
@@ -100,7 +102,6 @@ public abstract class VersionSupport {
      * Hide an entity
      */
     public abstract void hideEntity(Entity e, Player p);
-
 
     /**
      * Check if item-stack is armor
@@ -245,6 +246,7 @@ public abstract class VersionSupport {
 
     /**
      * Get a custom item tag.
+     *
      * @return null if not present.
      */
     public abstract String getTag(ItemStack itemStack, String key);
@@ -415,11 +417,6 @@ public abstract class VersionSupport {
         return despawnables;
     }
 
-
-    public static String getName() {
-        return name2;
-    }
-
     public abstract int getVersion();
 
     public Plugin getPlugin() {
@@ -458,7 +455,7 @@ public abstract class VersionSupport {
 
     public abstract void clearArrowsFromPlayerBody(Player player);
 
-    public abstract void placeTowerBlocks(Block b, IArena a, TeamColor color, int x, int y,int z);
+    public abstract void placeTowerBlocks(Block b, IArena a, TeamColor color, int x, int y, int z);
 
     public abstract void placeLadder(Block b, int x, int y, int z, IArena a, int ladderdata);
 

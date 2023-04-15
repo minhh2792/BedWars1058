@@ -16,7 +16,7 @@ public class Warnings implements Listener {
 
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        if(!player.isOp()) return;
+        if (!player.isOp()) return;
 
         if (Bukkit.getPluginManager().isPluginEnabled("Multiverse-Core")) {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -24,9 +24,9 @@ public class Warnings implements Listener {
             }, 5); // run after 5 ticks to make sure its after any update spam on join
         }
 
-        if(Bukkit.getServer().getSpawnRadius() > 0) {
+        if (Bukkit.getServer().getSpawnRadius() > 0) {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                player.sendMessage(ChatColor.RED + "[BedWars1058] Your spawn-protection in server.properties is enabled. "+ChatColor.YELLOW+"This might mess with BedWars arenas!"+ChatColor.GRAY+" I highly reccomend setting it to 0.");
+                player.sendMessage(ChatColor.RED + "[BedWars1058] Your spawn-protection in server.properties is enabled. " + ChatColor.YELLOW + "This might mess with BedWars arenas!" + ChatColor.GRAY + " I highly reccomend setting it to 0.");
             }, 5);
         }
     }

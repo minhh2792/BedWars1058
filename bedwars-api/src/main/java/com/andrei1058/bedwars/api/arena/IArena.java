@@ -107,16 +107,14 @@ public interface IArena {
     String getDisplayName();
 
     /**
-     * Change world name for auto-scaling.
-     *
-     * @param name new name.
-     */
-    void setWorldName(String name);
-
-    /**
      * Get arena status.
      */
     GameState getStatus();
+
+    /**
+     * Set game status without starting stats.
+     */
+    void setStatus(GameState status);
 
     /**
      * Get players in arena.
@@ -133,6 +131,8 @@ public interface IArena {
      */
     String getGroup();
 
+    void setGroup(String group);
+
     /**
      * Get maximum players allowed in a team.
      */
@@ -144,7 +144,6 @@ public interface IArena {
      * Integer is the remaining time.
      */
     ConcurrentHashMap<Player, Integer> getRespawnSessions();
-
 
     /**
      * Disable spectator collisions.
@@ -246,6 +245,7 @@ public interface IArena {
 
     /**
      * Gets the cooldowns for fireballs
+     *
      * @return The cooldowns for fireballs
      */
     Map<UUID, Long> getFireballCooldowns();
@@ -285,13 +285,6 @@ public interface IArena {
      */
     int getIslandRadius();
 
-    void setGroup(String group);
-
-    /**
-     * Set game status without starting stats.
-     */
-    void setStatus(GameState status);
-
     /**
      * Change game status starting tasks.
      */
@@ -325,7 +318,6 @@ public interface IArena {
      */
     void addPlayerBedDestroyed(Player p);
 
-
     /**
      * Get arena by player name.
      * Used to get the team for a player that has left the arena.
@@ -346,14 +338,14 @@ public interface IArena {
     void addPlayerDeath(Player p);
 
     /**
-     * Set next event for the arena.
-     */
-    void setNextEvent(NextEvent nextEvent);
-
-    /**
      * Get next event.
      */
     NextEvent getNextEvent();
+
+    /**
+     * Set next event for the arena.
+     */
+    void setNextEvent(NextEvent nextEvent);
 
     /**
      * This will give the pre-game command Items.
@@ -427,11 +419,18 @@ public interface IArena {
      */
     ConcurrentHashMap<Player, Integer> getShowTime();
 
-    void setAllowSpectate(boolean allowSpectate);
-
     boolean isAllowSpectate();
 
+    void setAllowSpectate(boolean allowSpectate);
+
     String getWorldName();
+
+    /**
+     * Change world name for auto-scaling.
+     *
+     * @param name new name.
+     */
+    void setWorldName(String name);
 
     /**
      * Get player render distance in blocks.

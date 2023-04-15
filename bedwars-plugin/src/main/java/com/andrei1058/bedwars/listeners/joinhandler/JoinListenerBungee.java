@@ -99,7 +99,7 @@ public class JoinListenerBungee implements Listener {
                 }
             } else if (arena.getStatus() == GameState.playing) {
                 // Spectator logic
-                if (!arena.isAllowSpectate()){
+                if (!arena.isAllowSpectate()) {
                     e.disallow(PlayerLoginEvent.Result.KICK_OTHER, playerLang.m(Messages.COMMAND_JOIN_SPECTATOR_DENIED_MSG));
                 }
             }
@@ -126,7 +126,7 @@ public class JoinListenerBungee implements Listener {
                     PaperSupport.teleportC(p, mainWorld.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.PLUGIN);
                 }
                 // hide admin to in game users
-                for (Player inGame : Bukkit.getOnlinePlayers()){
+                for (Player inGame : Bukkit.getOnlinePlayers()) {
                     if (inGame.equals(p)) continue;
                     if (Arena.isInArena(inGame)) {
                         BedWars.nms.spigotHidePlayer(p, inGame);
@@ -179,7 +179,7 @@ public class JoinListenerBungee implements Listener {
                 // If has no party
                 if (proxyUser.getPartyOwnerOrSpectateTarget() == null) {
                     // Add to arena
-                    if (!arena.addPlayer(p, true)){
+                    if (!arena.addPlayer(p, true)) {
                         p.kickPlayer(Language.getMsg(p, Messages.ARENA_JOIN_DENIED_NO_PROXY));
                     }
                 } else {
@@ -210,7 +210,7 @@ public class JoinListenerBungee implements Listener {
                         }
                         preLoadedParty.addMember(p);
                     }
-                    if (!arena.addPlayer(p, true)){
+                    if (!arena.addPlayer(p, true)) {
                         p.kickPlayer(Language.getMsg(p, Messages.ARENA_JOIN_DENIED_NO_PROXY));
                     }
                 }

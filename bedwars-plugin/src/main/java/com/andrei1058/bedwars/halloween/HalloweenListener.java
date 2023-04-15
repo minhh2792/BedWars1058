@@ -137,7 +137,7 @@ public class HalloweenListener implements Listener {
     }
 
     @EventHandler
-    public void onEnable(ArenaEnableEvent e){
+    public void onEnable(ArenaEnableEvent e) {
         new CobWebRemover(e.getArena());
     }
 }

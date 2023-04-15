@@ -30,18 +30,18 @@ import org.bukkit.event.Listener;
 public class PrePartyListener implements Listener {
 
     @EventHandler
-    public void onDisable(ArenaDisableEvent e){
+    public void onDisable(ArenaDisableEvent e) {
         PreLoadedParty plp = PreLoadedParty.getPartyByOwner(e.getWorldName());
-        if (plp != null){
+        if (plp != null) {
             //todo what was I doing here lmao. no sense
             PreLoadedParty.getPreLoadedParties().remove(plp);
         }
     }
 
     @EventHandler
-    public void onRestart(ArenaRestartEvent e){
+    public void onRestart(ArenaRestartEvent e) {
         PreLoadedParty plp = PreLoadedParty.getPartyByOwner(e.getWorldName());
-        if (plp != null){
+        if (plp != null) {
             //todo what was I doing here lmao. no sense
             PreLoadedParty.getPreLoadedParties().remove(plp);
         }

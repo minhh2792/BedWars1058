@@ -44,6 +44,30 @@ public class EggBridge implements Listener {
     //Active eggBridges
     private static HashMap<Egg, EggBridgeTask> bridges = new HashMap<>();
 
+    /**
+     * Remove an egg from the active eggs list
+     *
+     * @since API 7
+     */
+    public static void removeEgg(Egg e) {
+        if (bridges.containsKey(e)) {
+            if (bridges.get(e) != null) {
+                bridges.get(e).cancel();
+            }
+            bridges.remove(e);
+        }
+    }
+
+    /**
+     * Get active egg bridges.
+     * Modified  in api 11
+     *
+     * @since API 11
+     */
+    public static Map<Egg, EggBridgeTask> getBridges() {
+        return Collections.unmodifiableMap(bridges);
+    }
+
     @EventHandler
     public void onLaunch(ProjectileLaunchEvent event) {
         if (BedWars.getServerType() == ServerType.MULTIARENA) {
@@ -77,29 +101,5 @@ public class EggBridge implements Listener {
         if (e.getEntity() instanceof Egg) {
             removeEgg((Egg) e.getEntity());
         }
-    }
-
-    /**
-     * Remove an egg from the active eggs list
-     *
-     * @since API 7
-     */
-    public static void removeEgg(Egg e) {
-        if (bridges.containsKey(e)) {
-            if (bridges.get(e) != null) {
-                bridges.get(e).cancel();
-            }
-            bridges.remove(e);
-        }
-    }
-
-    /**
-     * Get active egg bridges.
-     * Modified  in api 11
-     *
-     * @since API 11
-     */
-    public static Map<Egg, EggBridgeTask> getBridges() {
-        return Collections.unmodifiableMap(bridges);
     }
 }

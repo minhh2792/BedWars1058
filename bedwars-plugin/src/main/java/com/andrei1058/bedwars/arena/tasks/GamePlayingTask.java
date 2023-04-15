@@ -142,7 +142,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         }
                     }
                     getArena().updateNextEvent();
-                    for (ITeam team : arena.getTeams()){
+                    for (ITeam team : arena.getTeams()) {
                         for (IGenerator o : team.getGenerators()) {
                             Location l = o.getLocation();
                             for (int y = 0; y < 20; y++) {
@@ -214,7 +214,7 @@ public class GamePlayingTask implements Runnable, PlayingTask {
                         continue;
                     }
                     ITeam t = a.getTeam(e.getKey());
-                    if (t == null){
+                    if (t == null) {
                         a.addSpectator(e.getKey(), true, null);
                     } else {
                         t.respawnMember(e.getKey());

@@ -47,9 +47,9 @@ public class PumpkinContent extends CategoryContent {
         super(null, null, null, null, father);
 
         int foundSlot = -1;
-        for (int i = 19; i < 26; i++){
+        for (int i = 19; i < 26; i++) {
             int finalI = i;
-            if (father.getCategoryContentList().stream().noneMatch(categoryContent -> categoryContent.getSlot() == finalI)){
+            if (father.getCategoryContentList().stream().noneMatch(categoryContent -> categoryContent.getSlot() == finalI)) {
                 foundSlot = i;
                 break;
             }
@@ -134,6 +134,11 @@ public class PumpkinContent extends CategoryContent {
         }
 
         @Override
+        public void setPrice(int price) {
+
+        }
+
+        @Override
         public Material getCurrency() {
             return Material.IRON_INGOT;
         }
@@ -144,23 +149,13 @@ public class PumpkinContent extends CategoryContent {
         }
 
         @Override
-        public void setPrice(int price) {
-
+        public ItemStack getItemStack() {
+            return new ItemStack(Material.PUMPKIN, 12);
         }
 
         @Override
         public void setItemStack(ItemStack itemStack) {
 
-        }
-
-        @Override
-        public void setBuyItemsList(List<IBuyItem> buyItemsList) {
-
-        }
-
-        @Override
-        public ItemStack getItemStack() {
-            return new ItemStack(Material.PUMPKIN, 12);
         }
 
         @Override
@@ -171,6 +166,11 @@ public class PumpkinContent extends CategoryContent {
         @Override
         public List<IBuyItem> getBuyItemsList() {
             return Collections.singletonList(new FinalItem());
+        }
+
+        @Override
+        public void setBuyItemsList(List<IBuyItem> buyItemsList) {
+
         }
     }
 

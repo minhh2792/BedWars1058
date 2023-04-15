@@ -111,7 +111,7 @@ public class ArenaGUI {
             for (String s : Language.getList(p, Messages.ARENA_GUI_ARENA_CONTENT_LORE)) {
                 if (!(s.contains("{group}") && arenas.get(arenaKey).getGroup().equalsIgnoreCase("default"))) {
                     lore.add(s.replace("{on}", String.valueOf(arena != null ? arena == arenas.get(arenaKey) ? players : arenas.get(arenaKey).getPlayers().size() : arenas.get(arenaKey).getPlayers().size())).replace("{max}",
-                            String.valueOf(arenas.get(arenaKey).getMaxPlayers())).replace("{status}", arenas.get(arenaKey).getDisplayStatus(Language.getPlayerLanguage(p)))
+                                    String.valueOf(arenas.get(arenaKey).getMaxPlayers())).replace("{status}", arenas.get(arenaKey).getDisplayStatus(Language.getPlayerLanguage(p)))
                             .replace("{group}", arenas.get(arenaKey).getDisplayGroup(p)));
                 }
             }
@@ -135,7 +135,7 @@ public class ArenaGUI {
         //ash.setInv(inv);
 
         String skippedSlotMaterial = BedWars.config.getString(ConfigPath.GENERAL_CONFIGURATION_ARENA_SELECTOR_STATUS_MATERIAL.replace("%path%", "skipped-slot"));
-        if(!skippedSlotMaterial.equalsIgnoreCase("none") && !skippedSlotMaterial.equalsIgnoreCase("air")) {
+        if (!skippedSlotMaterial.equalsIgnoreCase("none") && !skippedSlotMaterial.equalsIgnoreCase("air")) {
             ItemStack i = BedWars.nms.createItemStack(skippedSlotMaterial,
                     1, (byte) BedWars.config.getInt(ConfigPath.GENERAL_CONFIGURATION_ARENA_SELECTOR_STATUS_DATA.replace("%path%", "skipped-slot")));
             i = BedWars.nms.addCustomData(i, "RUNCOMMAND_bw join random");
@@ -147,13 +147,13 @@ public class ArenaGUI {
                             .replaceAll("\\{serverIp}", BedWars.config.getString(ConfigPath.GENERAL_CONFIG_PLACEHOLDERS_REPLACEMENTS_SERVER_IP))
             ));
             List<String> lore = new ArrayList<>();
-            for(String s : Language.getList(p, Messages.ARENA_GUI_SKIPPED_ITEM_LORE)) {
+            for (String s : Language.getList(p, Messages.ARENA_GUI_SKIPPED_ITEM_LORE)) {
                 lore.add(
                         s
                                 .replaceAll("\\{serverIp}", BedWars.config.getString(ConfigPath.GENERAL_CONFIG_PLACEHOLDERS_REPLACEMENTS_SERVER_IP))
                 );
             }
-            if(lore.size() > 0) {
+            if (lore.size() > 0) {
                 im.setLore(lore);
             }
             im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -170,29 +170,6 @@ public class ArenaGUI {
         refreshInv(p, null, 0);
         //refresh.put(p, new Object[]{inv, group});
         Sounds.playSound("arena-selector-open", p);
-    }
-
-    public static class ArenaSelectorHolder implements InventoryHolder {
-
-        private String group;
-        //private Inventory inv;
-
-        public ArenaSelectorHolder(String group){
-            this.group = group;
-        }
-
-        public String getGroup() {
-            return group;
-        }
-
-        @Override
-        public Inventory getInventory() {
-            return null;
-        }
-
-        /*public void setInv(Inventory inv) {
-            this.inv = inv;
-        }*/
     }
 
     @NotNull
@@ -218,5 +195,28 @@ public class ArenaGUI {
         } else {
             antiCalledTwice.put(player.getUniqueId(), System.currentTimeMillis() + 2000);
         }
+    }
+
+    public static class ArenaSelectorHolder implements InventoryHolder {
+
+        private String group;
+        //private Inventory inv;
+
+        public ArenaSelectorHolder(String group) {
+            this.group = group;
+        }
+
+        public String getGroup() {
+            return group;
+        }
+
+        @Override
+        public Inventory getInventory() {
+            return null;
+        }
+
+        /*public void setInv(Inventory inv) {
+            this.inv = inv;
+        }*/
     }
 }

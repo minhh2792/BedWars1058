@@ -55,10 +55,10 @@ import static com.andrei1058.bedwars.BedWars.mainCmd;
 public class NPC extends SubCommand {
 
     //main usage
-    private final List<BaseComponent> MAIN_USAGE = Arrays.asList(Misc.msgHoverClick("§f\n§c▪ §7Usage: §e/" + mainCmd + " " + getSubCommandName() + " add", "§fUse this command to create a join NPC.\n§fClick to see the syntax.", "/"+getParent().getName()+" "+getSubCommandName()+" add", ClickEvent.Action.RUN_COMMAND),
-            Misc.msgHoverClick("§c▪ §7Usage: §e/" + mainCmd + " " + getSubCommandName() + " remove", "§fStay in front of a NPC in order to remove it.", "/"+getParent().getName()+" "+getSubCommandName()+" remove", ClickEvent.Action.SUGGEST_COMMAND));
+    private final List<BaseComponent> MAIN_USAGE = Arrays.asList(Misc.msgHoverClick("§f\n§c▪ §7Usage: §e/" + mainCmd + " " + getSubCommandName() + " add", "§fUse this command to create a join NPC.\n§fClick to see the syntax.", "/" + getParent().getName() + " " + getSubCommandName() + " add", ClickEvent.Action.RUN_COMMAND),
+            Misc.msgHoverClick("§c▪ §7Usage: §e/" + mainCmd + " " + getSubCommandName() + " remove", "§fStay in front of a NPC in order to remove it.", "/" + getParent().getName() + " " + getSubCommandName() + " remove", ClickEvent.Action.SUGGEST_COMMAND));
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
-    private final List<BaseComponent> ADD_USAGE = Arrays.asList(Misc.msgHoverClick("f\n§c▪ §7Usage: §e§o/" + getParent().getName() + " " + getSubCommandName() + " add <skin> <arenaGroup> <§7line1§9\\n§7line2§e>\n§7You can use §e{players} §7for the players count in this arena §7group.", "Click to use.", "/"+getParent().getName()+" "+getSubCommandName()+" add", ClickEvent.Action.SUGGEST_COMMAND));
+    private final List<BaseComponent> ADD_USAGE = Arrays.asList(Misc.msgHoverClick("f\n§c▪ §7Usage: §e§o/" + getParent().getName() + " " + getSubCommandName() + " add <skin> <arenaGroup> <§7line1§9\\n§7line2§e>\n§7You can use §e{players} §7for the players count in this arena §7group.", "Click to use.", "/" + getParent().getName() + " " + getSubCommandName() + " add", ClickEvent.Action.SUGGEST_COMMAND));
 
     public NPC(ParentCommand parent, String name) {
         super(parent, name);
@@ -69,20 +69,62 @@ public class NPC extends SubCommand {
                 "/" + getParent().getName() + " " + getSubCommandName(), ClickEvent.Action.RUN_COMMAND));
     }
 
+    /**
+     * Create an armor-stand hologram
+     */
+    @NotNull
+    public static ArmorStand createArmorStand(Location loc) {
+        ArmorStand a = loc.getWorld().spawn(loc, ArmorStand.class);
+        a.setGravity(false);
+        a.setVisible(false);
+        a.setCustomNameVisible(false);
+        a.setMarker(true);
+        return a;
+    }
+
+    /**
+     * Get target NPC
+     */
+    @Nullable
+    @SuppressWarnings("WeakerAccess")
+    public static net.citizensnpcs.api.npc.NPC getTarget(Player player) {
+
+        BlockIterator iterator = new BlockIterator(player.getWorld(), player.getLocation().toVector(), player.getEyeLocation().getDirection(), 0, 100);
+        while (iterator.hasNext()) {
+            Block item = iterator.next();
+            for (Entity entity : player.getNearbyEntities(100, 100, 100)) {
+                int acc = 2;
+                for (int x = -acc; x < acc; x++) {
+                    for (int z = -acc; z < acc; z++) {
+                        for (int y = -acc; y < acc; y++) {
+                            if (entity.getLocation().getBlock().getRelative(x, y, z).equals(item)) {
+                                if (entity.hasMetadata("NPC")) {
+                                    net.citizensnpcs.api.npc.NPC npc = CitizensAPI.getNPCRegistry().getNPC(entity);
+                                    if (npc != null) return npc;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean execute(String[] args, CommandSender s) {
         if (s instanceof ConsoleCommandSender) return false;
         if (!JoinNPC.isCitizensSupport()) return false;
         Player p = (Player) s;
         if (args.length < 1) {
-            for (BaseComponent bc : MAIN_USAGE){
+            for (BaseComponent bc : MAIN_USAGE) {
                 p.spigot().sendMessage(bc);
             }
             return true;
         }
         if (args[0].equalsIgnoreCase("add")) {
             if (args.length < 4) {
-                for (BaseComponent bc : ADD_USAGE){
+                for (BaseComponent bc : ADD_USAGE) {
                     p.spigot().sendMessage(bc);
                 }
                 return true;
@@ -142,7 +184,7 @@ public class NPC extends SubCommand {
             String NPC_REMOVED = "§c▪ §bThe target NPC was removed!";
             p.sendMessage(NPC_REMOVED);
         } else {
-            for (BaseComponent bc : MAIN_USAGE){
+            for (BaseComponent bc : MAIN_USAGE) {
                 p.spigot().sendMessage(bc);
             }
         }
@@ -152,49 +194,6 @@ public class NPC extends SubCommand {
     @Override
     public List<String> getTabComplete() {
         return Arrays.asList("remove", "add");
-    }
-
-
-    /**
-     * Create an armor-stand hologram
-     */
-    @NotNull
-    public static ArmorStand createArmorStand(Location loc) {
-        ArmorStand a = loc.getWorld().spawn(loc, ArmorStand.class);
-        a.setGravity(false);
-        a.setVisible(false);
-        a.setCustomNameVisible(false);
-        a.setMarker(true);
-        return a;
-    }
-
-    /**
-     * Get target NPC
-     */
-    @Nullable
-    @SuppressWarnings("WeakerAccess")
-    public static net.citizensnpcs.api.npc.NPC getTarget(Player player) {
-
-        BlockIterator iterator = new BlockIterator(player.getWorld(), player.getLocation().toVector(), player.getEyeLocation().getDirection(), 0, 100);
-        while (iterator.hasNext()) {
-            Block item = iterator.next();
-            for (Entity entity : player.getNearbyEntities(100, 100, 100)) {
-                int acc = 2;
-                for (int x = -acc; x < acc; x++) {
-                    for (int z = -acc; z < acc; z++) {
-                        for (int y = -acc; y < acc; y++) {
-                            if (entity.getLocation().getBlock().getRelative(x, y, z).equals(item)) {
-                                if (entity.hasMetadata("NPC")) {
-                                    net.citizensnpcs.api.npc.NPC npc = CitizensAPI.getNPCRegistry().getNPC(entity);
-                                    if (npc != null) return npc;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     @Override

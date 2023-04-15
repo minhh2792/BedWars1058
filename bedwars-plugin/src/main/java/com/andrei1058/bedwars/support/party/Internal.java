@@ -36,6 +36,12 @@ import static com.andrei1058.bedwars.api.language.Language.getMsg;
 public class Internal implements Party {
     private static List<Internal.Party> parites = new ArrayList<>();
 
+    @NotNull
+    @Contract(pure = true)
+    public static List<Party> getParites() {
+        return Collections.unmodifiableList(parites);
+    }
+
     @Override
     public boolean hasParty(Player p) {
         for (Party party : getParites()) {
@@ -150,8 +156,8 @@ public class Internal implements Party {
 
     @Override
     public Player getOwner(Player member) {
-        for (Internal.Party party: Internal.getParites()) {
-            if (party.members.contains(member)){
+        for (Internal.Party party : Internal.getParites()) {
+            if (party.members.contains(member)) {
                 return party.owner;
             }
         }
@@ -177,12 +183,6 @@ public class Internal implements Party {
             if (p.getOwner() == owner) return p;
         }
         return null;
-    }
-
-    @NotNull
-    @Contract(pure = true)
-    public static List<Party> getParites() {
-        return Collections.unmodifiableList(parites);
     }
 
     static class Party {

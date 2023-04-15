@@ -123,7 +123,7 @@ public class TeleporterGUI {
                 .replace("{player}", targetPlayer.getDisplayName())
                 .replace("{playername}", targetPlayer.getName()));
         List<String> lore = new ArrayList<>();
-        String health = String.valueOf((int)targetPlayer.getHealth() * 100 / targetPlayer.getHealthScale());
+        String health = String.valueOf((int) targetPlayer.getHealth() * 100 / targetPlayer.getHealthScale());
         for (String s : getList(GUIholder, Messages.ARENA_SPECTATOR_TELEPORTER_GUI_HEAD_LORE)) {
             lore.add(s.replace("{health}", health).replace("{food}", String.valueOf(targetPlayer.getFoodLevel())));
         }

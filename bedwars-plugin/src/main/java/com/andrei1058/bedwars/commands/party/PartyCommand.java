@@ -38,12 +38,12 @@ import static com.andrei1058.bedwars.api.language.Language.getMsg;
 
 public class PartyCommand extends BukkitCommand {
 
+    //owner, target
+    private static HashMap<UUID, UUID> partySessionRequest = new HashMap<>();
+
     public PartyCommand(String name) {
         super(name);
     }
-
-    //owner, target
-    private static HashMap<UUID, UUID> partySessionRequest = new HashMap<>();
 
     @Override
     public boolean execute(CommandSender s, String c, String[] args) {
@@ -164,7 +164,7 @@ public class PartyCommand extends BukkitCommand {
                     p.sendMessage(getMsg(p, Messages.COMMAND_PARTY_INSUFFICIENT_PERMISSIONS));
                     return true;
                 }
-                if (args.length == 1){
+                if (args.length == 1) {
                     this.sendPartyCmds(p);
                     return true;
                 }
@@ -184,7 +184,7 @@ public class PartyCommand extends BukkitCommand {
                     }
                 }
                 break;
-            case "info" :
+            case "info":
             case "list":
                 if (!getParty().hasParty(p)) {
                     p.sendMessage(getMsg(p, Messages.COMMAND_PARTY_GENERAL_DENIED_NOT_IN_PARTY));

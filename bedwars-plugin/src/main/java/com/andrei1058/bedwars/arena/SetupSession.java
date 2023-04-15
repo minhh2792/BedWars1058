@@ -70,10 +70,6 @@ public class SetupSession implements ISetupSession {
         openGUI(player);
     }
 
-    public void setSetupType(SetupType setupType) {
-        this.setupType = setupType;
-    }
-
     @SuppressWarnings("WeakerAccess")
     public static List<SetupSession> getSetupSessions() {
         return setupSessions;
@@ -100,35 +96,6 @@ public class SetupSession implements ISetupSession {
         return 3;
     }
 
-    public SetupType getSetupType() {
-        return setupType;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public String getWorldName() {
-        return worldName;
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public boolean isStarted() {
-        return started;
-    }
-
-    /**
-     * Start setup session, loadStructure world etc
-     *
-     * @return return is broken. do not use it.
-     */
-    public boolean startSetup() {
-        getPlayer().sendMessage("§6 ▪ §7Loading " + getWorldName());
-        cm = new ArenaConfig(BedWars.plugin, getWorldName(), plugin.getDataFolder().getPath() + "/Arenas");
-        BedWars.getAPI().getRestoreAdapter().onSetupSessionStart(this);
-        return true;
-    }
-
     private static void openGUI(Player player) {
         Inventory inv = Bukkit.createInventory(null, 9, getInvName());
         ItemStack assisted = new ItemStack(Material.GLOWSTONE_DUST);
@@ -146,6 +113,63 @@ public class SetupSession implements ISetupSession {
         inv.setItem(getAdvancedSlot(), advanced);
 
         player.openInventory(inv);
+    }
+
+    /**
+     * Check if a player is in setup session
+     */
+    public static boolean isInSetupSession(UUID player) {
+        for (SetupSession ss : getSetupSessions()) {
+            if (ss.getPlayer().getUniqueId().equals(player)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get a player session
+     */
+    public static SetupSession getSession(UUID p) {
+        for (SetupSession ss : getSetupSessions()) {
+            if (ss.getPlayer().getUniqueId().equals(p)) return ss;
+        }
+        return null;
+    }
+
+    public SetupType getSetupType() {
+        return setupType;
+    }
+
+    public void setSetupType(SetupType setupType) {
+        this.setupType = setupType;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getWorldName() {
+        return worldName;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
+    /**
+     * Start setup session, loadStructure world etc
+     *
+     * @return return is broken. do not use it.
+     */
+    public boolean startSetup() {
+        getPlayer().sendMessage("§6 ▪ §7Loading " + getWorldName());
+        cm = new ArenaConfig(BedWars.plugin, getWorldName(), plugin.getDataFolder().getPath() + "/Arenas");
+        BedWars.getAPI().getRestoreAdapter().onSetupSessionStart(this);
+        return true;
     }
 
     /**
@@ -178,30 +202,6 @@ public class SetupSession implements ISetupSession {
     }
 
     /**
-     * Check if a player is in setup session
-     */
-    public static boolean isInSetupSession(UUID player) {
-        for (SetupSession ss : getSetupSessions()) {
-            if (ss.getPlayer().getUniqueId().equals(player)) return true;
-        }
-        return false;
-    }
-
-    /**
-     * Get a player session
-     */
-    public static SetupSession getSession(UUID p) {
-        for (SetupSession ss : getSetupSessions()) {
-            if (ss.getPlayer().getUniqueId().equals(p)) return ss;
-        }
-        return null;
-    }
-
-    public void setStarted(boolean started) {
-        this.started = started;
-    }
-
-    /**
      * Get arena configuration
      */
     public ArenaConfig getConfig() {
@@ -213,7 +213,7 @@ public class SetupSession implements ISetupSession {
         player.getInventory().clear();
         PaperSupport.teleport(player, Bukkit.getWorld(getWorldName()).getSpawnLocation());
         player.setGameMode(GameMode.CREATIVE);
-        Bukkit.getScheduler().runTaskLater(plugin, ()->{
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
             player.setAllowFlight(true);
             player.setFlying(true);
         }, 5L);
@@ -293,20 +293,20 @@ public class SetupSession implements ISetupSession {
         skipAutoCreateGen.add(location);
     }
 
-    public void setAutoCreatedEmerald(boolean autoCreatedEmerald) {
-        this.autoCreatedEmerald = autoCreatedEmerald;
-    }
-
     public boolean isAutoCreatedEmerald() {
         return autoCreatedEmerald;
     }
 
-    public void setAutoCreatedDiamond(boolean autoCreatedDiamond) {
-        this.autoCreatedDiamond = autoCreatedDiamond;
+    public void setAutoCreatedEmerald(boolean autoCreatedEmerald) {
+        this.autoCreatedEmerald = autoCreatedEmerald;
     }
 
     public boolean isAutoCreatedDiamond() {
         return autoCreatedDiamond;
+    }
+
+    public void setAutoCreatedDiamond(boolean autoCreatedDiamond) {
+        this.autoCreatedDiamond = autoCreatedDiamond;
     }
 
     public String getPrefix() {

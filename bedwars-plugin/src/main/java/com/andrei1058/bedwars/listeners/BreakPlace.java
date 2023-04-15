@@ -36,11 +36,11 @@ import com.andrei1058.bedwars.api.server.ServerType;
 import com.andrei1058.bedwars.arena.Arena;
 import com.andrei1058.bedwars.commands.bedwars.subcmds.sensitive.setup.AutoCreateTeams;
 import com.andrei1058.bedwars.configuration.Sounds;
-import com.andrei1058.bedwars.support.paper.PaperSupport;
 import com.andrei1058.bedwars.popuptower.TowerEast;
 import com.andrei1058.bedwars.popuptower.TowerNorth;
 import com.andrei1058.bedwars.popuptower.TowerSouth;
 import com.andrei1058.bedwars.popuptower.TowerWest;
+import com.andrei1058.bedwars.support.paper.PaperSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -79,6 +79,18 @@ public class BreakPlace implements Listener {
         allowFireBreak = config.getBoolean(ConfigPath.GENERAL_CONFIGURATION_ALLOW_FIRE_EXTINGUISH);
     }
 
+    public static boolean isBuildSession(Player p) {
+        return buildSession.contains(p);
+    }
+
+    public static void addBuildSession(Player p) {
+        buildSession.add(p);
+    }
+
+    public static void removeBuildSession(Player p) {
+        buildSession.remove(p);
+    }
+
     @EventHandler
     public void onIceMelt(BlockFadeEvent e) {
         if (BedWars.getServerType() == ServerType.MULTIARENA) {
@@ -98,7 +110,6 @@ public class BreakPlace implements Listener {
             if (Arena.getArenaByIdentifier(e.getBlock().getWorld().getName()) != null) e.setCancelled(true);
         }
     }
-
 
     @EventHandler(ignoreCancelled = true)
     public void onBurn(BlockBurnEvent event) {
@@ -528,7 +539,6 @@ public class BreakPlace implements Listener {
         }
     }
 
-
     @EventHandler
     public void onBlow(EntityExplodeEvent e) {
         if (e.isCancelled()) return;
@@ -626,17 +636,5 @@ public class BreakPlace implements Listener {
                     e.setCancelled(true);
             }
         }
-    }
-
-    public static boolean isBuildSession(Player p) {
-        return buildSession.contains(p);
-    }
-
-    public static void addBuildSession(Player p) {
-        buildSession.add(p);
-    }
-
-    public static void removeBuildSession(Player p) {
-        buildSession.remove(p);
     }
 }
